@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext as _
-from .models import User
+from .models import User, Tag
 
 
 @admin.register(User)
@@ -16,3 +16,12 @@ class UserAdmin(BaseUserAdmin):
                                            'is_superuser')}),
             (_('Important Dates'), {'fields': ('last_login', )})
     ]
+    add_fieldsets = [
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2')
+            }),
+    ]
+
+
+admin.site.register(Tag)

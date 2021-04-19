@@ -13,12 +13,14 @@ def create_sample_user(data):
 
 
 def authenticate_user(data):
+    """Authenticate created user"""
     res = requests.post(TOKEN_URL, data=data)
     print(res.json())
+    return res.json()['token']
 
 
 def update_user(data, headers):
-    res = requests.put(ME_URL, headers=headers, data=data, )
+    res = requests.put(ME_URL, headers=headers, data=data)
     print(res.json())
 
 
@@ -28,7 +30,9 @@ payload = {'email': 'mynew@email.com',
            }
 
 # create_sample_user(payload)
-authenticate_user(payload)
+token = authenticate_user(payload)
+print(token)
 headers = {}
-headers['Authorization'] = 'Token af0289cc5291a22d895ce74354a138f4626f70b5'
+headers['Authorization'] = 'Token '+token
+
 # update_user(payload,headers)
