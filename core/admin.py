@@ -26,4 +26,9 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(models.Tag)
 admin.site.register(models.Ingredient)
-admin.site.register(models.Recipe)
+# admin.site.register(models.Recipe)
+
+
+@admin.register(models.Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = ['title', 'time_minutes', 'price', ]
