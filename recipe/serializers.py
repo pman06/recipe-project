@@ -19,16 +19,21 @@ class IngredientSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 
+class UserTagField(serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        user = self.context['request'].user
+        queryset = Tag.objects.filter(user=user)
+        return queryset
+
+
 class RecipeSerializer(serializers.ModelSerializer):
     """Serielizer for recipe objects"""
+    # request = context.get('request')
     ingredients = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Ingredient.objects.all()
     )
-    tags = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=Tag.objects.all()
-    )
+    tags = UserTagField(many=True)
 
     class Meta:
         model = Recipe
