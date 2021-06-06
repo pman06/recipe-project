@@ -9,6 +9,17 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ['id', 'name']
         read_only_fields = ['id']
 
+    def validate_name(self, name):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+
+        exists = Tag.objects.filter(user=user, name=name).exists()
+        if(exists):
+            raise serializers.ValidationError("Duplicate submission!")
+        return name
+
 
 class IngredientSerializer(serializers.ModelSerializer):
     """Serializer for ingredient objects"""

@@ -95,7 +95,7 @@ class PublicUserApiTest(TestCase):
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_create_toke_with_missing_fields(self):
+    def test_create_token_with_missing_fields(self):
         """Test token creation filed with missing fields in payload"""
         payload = {
             "email": "",
